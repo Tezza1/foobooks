@@ -15,8 +15,9 @@ class PracticeController extends Controller
 	*
 	*/
     public function example5() {
-        
-        echo config('app.url');
+
+        return 1;
+
     }
 
     /**
