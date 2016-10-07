@@ -15,6 +15,9 @@ $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
 
+# SB: If you wanted to specify a different environment file to load from, you could do this:
+# $app->loadEnvironmentFrom('.env.testing');
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
