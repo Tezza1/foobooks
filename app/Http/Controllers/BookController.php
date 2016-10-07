@@ -45,9 +45,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($title)
     {
-        //
+        return view('book.show')->with('title', $title);
     }
 
     /**

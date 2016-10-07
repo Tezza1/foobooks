@@ -6,8 +6,49 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Rych\Random\Random;
+
 class PracticeController extends Controller
 {
+
+    /**
+	*
+	*/
+    public function example5() {
+        
+        echo config('app.url');
+    }
+
+    /**
+	*
+	*/
+    public function example4() {
+
+        $random = new Random();
+        return $random->getRandomString(8);
+
+    }
+
+    /**
+	*
+	*/
+    public function example3() {
+
+        echo \App::environment();
+        echo 'App debug: '.config('app.debug');
+
+    }
+
+
+    /**
+	* Demonstrates useful data output methods like dump, and dd
+	*/
+    public function example2() {
+        $fruits = ['apples','oranges','pears'];
+        dump($fruits);
+        var_dump($fruits);
+        dd($fruits);
+    }
 
     /**
 	*
