@@ -36,7 +36,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return 'To do: Process adding a new book';
     }
 
     /**
