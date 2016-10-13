@@ -42,10 +42,6 @@
     <section>
         {{-- Main page content will be yielded here --}}
         @yield('content')
-
-        @if($title != '')
-            {{ $title }}
-        @endif
     </section>
 
     <footer>
