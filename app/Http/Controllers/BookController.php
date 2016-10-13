@@ -28,6 +28,8 @@ class BookController extends Controller
         return view('book.create');
     }
 
+    # PHP Doc Blocks
+
     /**
      * Store a newly created resource in storage.
      *
@@ -36,7 +38,35 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        return 'To do: Process adding a new book';
+
+        # Validate
+        $this->validate($request, [
+            'title' => 'required|min:3|alpha_num',
+        ]);
+
+        # If there were errors, Laravel will redirect the
+        # user back to the page that submitted this request
+
+        # If there were NO errors, the code will continue...
+
+
+        # ----- BAD DATA WONT GET PAST THIS POINT ----
+
+        # Option 1) OLD WAY< NOOOO
+        #$title = $_POST['title'];
+
+        # Option 2) USE THIS ONE! :)
+        $title = $request->input('title');
+
+
+
+
+
+        # Imagine: There's code here to enter the book into the database
+        # Imagine: There's code here that generates the user's lorem ipsum
+
+        # Print the results:
+        return \Redirect::to('/books/create');
     }
 
     /**
@@ -83,5 +113,22 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function getLoremIpsumText(Request $request) {
+
+        # Validate the request....
+
+        # Generate the lorem ipsum text
+        $howManyParagraphs = $request->input('howManyParagraphs');
+
+        # Logic...
+        $loremenator = \SBuck\Loremenator();
+        $text = $loremenator->getParagraphs($howManyParagraphs);
+
+        # Display the results...
+        return view('lorem')->with(['text', $text]);
+
     }
 }

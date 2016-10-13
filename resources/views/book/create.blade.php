@@ -4,6 +4,21 @@
 
 @section('content')
     <h1>Add a new book</h1>
-    To do: Form to add a new book
-    
+    <form method='POST' action='/books'>
+
+        {{ csrf_field() }}
+
+        Title: <input type='text' name='title' value='{{ old("title") }}'>
+
+        <input type='submit' value='Add new book'>
+
+        @if(count($errors) > 0)
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+
+    </form>
 @endsection
