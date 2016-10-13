@@ -25,7 +25,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        return 'To do: Show the form for creating a book.';
+        return view('book.create');
     }
 
     /**
