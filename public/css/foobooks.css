@@ -1,0 +1,137 @@
+/* http://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+/* End Box Sizing */
+
+a:link {
+    text-decoration:underline;
+}
+
+
+/* clearfix http://nicolasgallagher.com/micro-clearfix-hack/ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1; /* For IE 6/7 only */
+}
+/* End clearfix */
+
+
+/* http://mystrd.at/modern-clean-css-sticky-footer */
+html {
+    position:relative;
+    min-height:100%;
+}
+body {
+    margin:0 0 100px; /* bottom = footer height */
+}
+
+footer {
+    position: absolute;
+    left:0;
+    bottom:0;
+    height:30px;
+    width:100%;
+    background-color:#ccc;
+    text-align:center;
+    padding:5px;
+}
+/* End Sticky Footer */
+
+
+.logo {
+    max-width:300px;
+}
+
+section, header, nav {
+    padding:5px 25px;
+}
+
+@media (max-width: 600px) {
+    .logo {
+        width:100%;
+    }
+}
+
+nav ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+
+footer a:link, nav a:link {
+    text-decoration:none;
+}
+
+nav ul li {
+    display:inline;
+    background-color:#eee;
+    padding:5px;
+    margin-right:5px;
+}
+
+
+/*----------------------------------------------------
+Forms
+-----------------------------------------------------*/
+label {
+    margin-top:10px;
+    margin-bottom:0;
+    display:block;
+    font-size:1em;
+}
+
+fieldset label {
+    margin-top:0px;
+}
+
+legend {
+    margin-bottom:5px;
+    font-size:1em;
+    border-bottom:0px;
+}
+
+.checkboxLabel, .radioLabel {
+    display:inline;
+}
+
+input[type=text],input[type=password],select {
+    width:300px;
+    font-size:20px;
+}
+
+.error {
+    color:red;
+    margin:0;
+    margin-top:5px;
+    padding:0;
+    list-style-type:none;
+}
+
+
+
+/*----------------------------------------------------
+Flash message
+-----------------------------------------------------*/
+.flash_message {
+    width:100%;
+    text-align:center;
+    padding:5px;
+    position:fixed;
+    top:0;
+    left:0;
+    background-color:yellow;
+    font-weight:bold;
+}

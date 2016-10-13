@@ -42,6 +42,14 @@ for($i = 0; $i < 100; $i++) {
 
 
 /**
+* Development related
+*/
+if(App::environment() == 'local') {
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+}
+
+
+/**
 * Main homepage
 */
 Route::get('/', function () {

@@ -15,7 +15,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return 'Hi from the book controller!';
+        return 'To do: Display a listing of all the books.';
     }
 
     /**
@@ -25,7 +25,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return 'To do: Show the form for creating a book.';
     }
 
     /**
@@ -50,6 +50,7 @@ class BookController extends Controller
         return view('book.show')->with('title', $title);
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -58,7 +59,7 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        return 'To do: Show form to edit a book';
     }
 
     /**
