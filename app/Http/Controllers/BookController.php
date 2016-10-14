@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 class BookController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -28,8 +29,6 @@ class BookController extends Controller
         return view('book.create');
     }
 
-    # PHP Doc Blocks
-
     /**
      * Store a newly created resource in storage.
      *
@@ -47,27 +46,21 @@ class BookController extends Controller
         # If there were errors, Laravel will redirect the
         # user back to the page that submitted this request
 
-        # If there were NO errors, the code will continue...
+        # If there were NO errors, the script will continue...
 
+        # Get the data from the form
+        #$title = $_POST['title']; # Option 1) Old way, don't do this.
+        $title = $request->input('title'); # Option 2) USE THIS ONE! :)
 
-        # ----- BAD DATA WONT GET PAST THIS POINT ----
+        # Here's where your code for what happens next should go.
+        # Examples:
+        # Save book in the database
 
-        # Option 1) OLD WAY< NOOOO
-        #$title = $_POST['title'];
-
-        # Option 2) USE THIS ONE! :)
-        $title = $request->input('title');
-
-
-
-
-
-        # Imagine: There's code here to enter the book into the database
-        # Imagine: There's code here that generates the user's lorem ipsum
-
-        # Print the results:
+        # When done - what should happen?
+        # You can return a String (not ideal), or a View, or redirect to some other page:
         return \Redirect::to('/books/create');
     }
+
 
     /**
      * Display the specified resource.
@@ -116,7 +109,13 @@ class BookController extends Controller
     }
 
 
-    public function getLoremIpsumText(Request $request) {
+    /**
+	* This was example code I wrote in Lecture 7
+    * It shows, roughly, what a controller action for your P3 might look like
+    * It is not at all related to the Book resource.
+	*/
+    public function getLoremIpsumText(Request $request)
+    {
 
         # Validate the request....
 
