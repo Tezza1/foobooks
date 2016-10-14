@@ -8,6 +8,8 @@ use App\Http\Requests;
 
 use Rych\Random\Random;
 
+use App\Utilities\Quote;
+
 class PracticeController extends Controller
 {
 
@@ -16,7 +18,8 @@ class PracticeController extends Controller
 	*/
     public function example5() {
 
-        return 1;
+        $quote = new Quote();
+        return $quote->getRandomQuote();
 
     }
 
