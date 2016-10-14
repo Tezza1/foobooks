@@ -57,8 +57,13 @@ class BookController extends Controller
         # Save book in the database
 
         # When done - what should happen?
-        # You can return a String (not ideal), or a View, or redirect to some other page:
+        # You can return a String (not ideal), or a View, or Redirect to some other page:
         return \Redirect::to('/books/create');
+
+        # FYI: There's also a Laravel helper that could shorten the above line to this:
+        # return redirect('/books/create');
+
+
     }
 
 
