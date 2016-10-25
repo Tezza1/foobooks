@@ -2,7 +2,7 @@
 
 
 @section('title')
-    View the book {{ $title }}
+    Success!
 @stop
 
 

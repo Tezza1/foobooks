@@ -10,41 +10,37 @@ class BookController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+	*
+	*/
     public function index()
     {
         return 'To do: Display a listing of all the books.';
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+	* Get
+	*/
     public function create()
     {
         return view('book.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+	* Post
+	*/
     public function store(Request $request)
     {
 
         # Validate
         $this->validate($request, [
-            'title' => 'required|min:3|alpha_num',
+            'title' => 'required|min:3',
         ]);
 
         # If there were errors, Laravel will redirect the
         # user back to the page that submitted this request
+        # The validator will tack on the form data to the request
+        # so that it's possible (but not required) to pre-fill the
+        # form fields with the data the user had entered
 
         # If there were NO errors, the script will continue...
 
@@ -57,22 +53,24 @@ class BookController extends Controller
         # Save book in the database
 
         # When done - what should happen?
-        # You can return a String (not ideal), or a View, or Redirect to some other page:
-        return \Redirect::to('/books/create');
 
-        # FYI: There's also a Laravel helper that could shorten the above line to this:
+        # Beginner students - you should just return a view with a confirmation page; it's the easiest option.
+        return view('book.store')->with(['title' => $title]);
+
+
+        # More advanced students, there is the option of redirecting the user back to the page
+        # they were on and display the message there.
+        # If you need to send data with this redirect please refer to:
+        # https://laravel.com/docs/5.3/redirects#redirecting-with-flashed-session-data
+
         # return redirect('/books/create');
-
 
     }
 
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+	*
+	*/
     public function show($title)
     {
         return view('book.show')->with('title', $title);
@@ -80,34 +78,24 @@ class BookController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+	*
+	*/
     public function edit($id)
     {
         return 'To do: Show form to edit a book';
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+	*
+	*/
     public function update(Request $request, $id)
     {
         //
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+	*
+	*/
     public function destroy($id)
     {
         //
