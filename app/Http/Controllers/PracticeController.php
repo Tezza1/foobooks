@@ -3,15 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use Rych\Random\Random;
-
 use App\Utilities\Quote;
+
+// use Magyarjeti\Loripsum\Client;
+// use Magyarjeti\Loripsum\Http\CurlAdapter;
+
+
+# Access via /practice/#
 
 class PracticeController extends Controller
 {
+
+    /**
+	*
+	*/
+    public function example6() {
+        return \Magyarjeti\LaravelLipsum\LipsumFacade::html();
+	}
 
     /**
 	*
