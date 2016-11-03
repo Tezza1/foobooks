@@ -55,7 +55,7 @@ for($i = 0; $i < 100; $i++) {
 
 
 /**
-* Development related
+* View logs, only accessible locally
 */
 # Make it so the logs can only be seen locally
 if(App::environment() == 'local') {
@@ -63,16 +63,25 @@ if(App::environment() == 'local') {
 }
 
 
+/**
+* ref: https://github.com/susanBuck/dwa15-fall2016-notes/blob/master/03_Laravel/21_Schemas_and_Migrations.md#starting-overyour-first-migrations
+*/
+if(App::environment('local')) {
+
+    Route::get('/drop', function() {
+
+        DB::statement('DROP database foobooks');
+        DB::statement('CREATE database foobooks');
+
+        return 'Dropped foobooks; created foobooks.';
+    });
+
+};
+
 
 /**
-* Main homepage
+* ref: https://github.com/susanBuck/dwa15-fall2016-notes/blob/master/03_Laravel/19_Local_Database_Setup.md#test-your-connection
 */
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-
 Route::get('/debug', function() {
 
 	echo '<pre>';
@@ -106,4 +115,12 @@ Route::get('/debug', function() {
 
 	echo '</pre>';
 
+});
+
+
+/**
+* Main homepage
+*/
+Route::get('/', function () {
+    return view('welcome');
 });
