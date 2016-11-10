@@ -239,7 +239,7 @@ class PracticeController extends Controller
             if(strstr($actionMethod, 'example')) {
 
                 # Display a link to that method's route
-                echo '<a target="_blank" href="/practice/'.str_replace('example','',$actionMethod).'">'.$actionMethod.'</a>';
+                echo '<a target="_blank" href="/practice/'.str_replace('example','',$actionMethod).'">'.$actionMethod.'</a><br>';
             }
         }
     }
