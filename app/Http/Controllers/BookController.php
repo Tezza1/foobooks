@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Book;
+use Session;
 
 class BookController extends Controller
 {
@@ -14,7 +16,8 @@ class BookController extends Controller
 	*/
     public function index()
     {
-        return 'To do: Display a listing of all the books.';
+        $books = Book::all();
+        return view('book.index')->with(['books' => $books]);
     }
 
     /**
@@ -34,6 +37,9 @@ class BookController extends Controller
         # Validate
         $this->validate($request, [
             'title' => 'required|min:3',
+            'published' => 'required|min:4|numeric',
+            'cover' => 'required|url',
+            'purchase_link' => 'required|url',
         ]);
 
         # If there were errors, Laravel will redirect the
@@ -48,22 +54,16 @@ class BookController extends Controller
         #$title = $_POST['title']; # Option 1) Old way, don't do this.
         $title = $request->input('title'); # Option 2) USE THIS ONE! :)
 
-        # Here's where your code for what happens next should go.
-        # Examples:
-        # Save book in the database
+        $book = new Book();
+        $book->title = $request->input('title');
+        $book->published = $request->input('published');
+        $book->cover = $request->input('cover');
+        $book->purchase_link = $request->input('purchase_link');
+        $book->save();
 
-        # When done - what should happen?
+        Session::flash('flash_message', 'Your book '.$book->title.' was added.');
 
-        # Beginner students - you should just return a view with a confirmation page; it's the easiest option.
-        return view('book.store')->with(['title' => $title]);
-
-
-        # More advanced students, there is the option of redirecting the user back to the page
-        # they were on and display the message there.
-        # If you need to send data with this redirect please refer to:
-        # https://laravel.com/docs/5.3/redirects#redirecting-with-flashed-session-data
-
-        # return redirect('/books/create');
+        return redirect('/books');
 
     }
 
@@ -71,9 +71,9 @@ class BookController extends Controller
     /**
 	*
 	*/
-    public function show($title)
+    public function show($id)
     {
-        return view('book.show')->with('title', $title);
+        return view('book.show')->with('title', $id);
     }
 
 
@@ -82,7 +82,8 @@ class BookController extends Controller
 	*/
     public function edit($id)
     {
-        return 'To do: Show form to edit a book';
+        $book = Book::find($id);
+        return view('book.edit')->with(['book' => $book]);
     }
 
     /**
@@ -90,7 +91,27 @@ class BookController extends Controller
 	*/
     public function update(Request $request, $id)
     {
-        //
+
+        # Validate
+        $this->validate($request, [
+            'title' => 'required|min:3',
+            'published' => 'required|min:4|numeric',
+            'cover' => 'required|url',
+            'purchase_link' => 'required|url',
+        ]);
+
+        $book = Book::find($request->id);
+
+        $book->title = $request->title;
+        $book->cover = $request->cover;
+        $book->published = $request->published;
+        $book->purchase_link = $request->purchase_link;
+
+        $book->save();
+
+        Session::flash('flash_message', 'Your changes to '.$book->title.' were saved.');
+
+        return redirect('/books');
     }
 
     /**

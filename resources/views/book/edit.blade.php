@@ -1,16 +1,20 @@
 @extends('layouts.master')
 
 @section('title')
-    Add a new book
+    Edit:
 @stop
 
 @section('content')
 
-    <h1>Add a new book</h1>
+    <h1>Edit: </h1>
 
-    <form method='POST' action='/books'>
+    <form method='POST' action='/books/{{ $book->id }}'>
+
+        {{ method_field('PUT') }}
 
         {{ csrf_field() }}
+
+        <input name='id' value='{{$book->id}}' type='hidden'>
 
         <div class='form-group'>
            <label>Title:</label>
@@ -18,7 +22,7 @@
                 type='text'
                 id='title'
                 name='title'
-                value='{{ old('title','Green Eggs and Ham') }}'
+                value='{{ old('title', $book->title) }}'
             >
            <div class='error'>{{ $errors->first('title') }}</div>
         </div>
@@ -30,7 +34,7 @@
                type='text'
                id='published'
                name='published'
-               value='{{ old('published',1960) }}'
+               value='{{ old('published' , $book->published) }}'
            >
            <div class='error'>{{ $errors->first('published') }}</div>
         </div>
@@ -41,7 +45,7 @@
                type='text'
                id='cover'
                name='cover'
-               value='{{ old('cover', 'http://prodimage.images-bn.com/pimages/9780394800165_p0_v4_s192x300.jpg') }}'
+               value='{{ old('cover', $book->cover) }}'
            >
            <div class='error'>{{ $errors->first('cover') }}</div>
         </div>
@@ -52,7 +56,7 @@
                type='text'
                id='purchase_link'
                name='purchase_link'
-               value='{{ old('purchase_link','http://www.barnesandnoble.com/w/green-eggs-and-ham-dr-seuss/1100170349') }}'
+               value='{{ old('purchase_link', $book->purchase_link) }}'
            >
            <div class='error'>{{ $errors->first('purchase_link') }}</div>
         </div>
@@ -62,15 +66,8 @@
             All fields are required
         </div>
 
-        <button type="submit" class="btn btn-primary">Add book</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
 
-        {{--
-        <ul class=''>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        --}}
 
         <div class='error'>
             @if(count($errors) > 0)

@@ -15,6 +15,42 @@ use App\Book;
 class PracticeController extends Controller
 {
 
+
+    /**
+	*
+	*/
+    public function example15() {
+
+        /*
+        2 separate queries on the database:
+        */
+        // $books = Book::orderBy('id','descending')->get(); # Query DB
+        // $first_book = Book::orderBy('id','descending')->first(); # Query DB
+        // dump($books);
+        /*
+        1 query on the database, 1 query on the collection (better):
+        */
+        $books = Book::orderBy('id','descending')->get(); # Query DB
+        $first_book = $books->first(); # Query Collection
+        dump($books);
+        dump($first_book);
+
+    }
+
+    /**
+	*
+	*/
+    public function example14() {
+
+        $books = Book::all();
+        foreach($books as $book) {
+            #echo $book->title;
+            echo $book['title'];
+        }
+
+    }
+
+
     /**
     * Delete a book via the Book model
     */

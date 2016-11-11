@@ -16,10 +16,10 @@ Route::post('/books', 'BookController@store')->name('books.store');
 Route::get('/books/{title}', 'BookController@show')->name('books.show');
 
 # Show form to edit a book
-Route::get('/books/{title}/edit', 'BookController@edit')->name('books.edit');
+Route::get('/books/{id}/edit', 'BookController@edit')->name('books.edit');
 
 # Process form to edit a book
-Route::put('/books/{title}', 'BookController@update')->name('books.update');
+Route::put('/books/{id}', 'BookController@update')->name('books.update');
 
 # Delete a book
 Route::delete('/books/{title}', 'BookController@destroy')->name('books.destroy');
