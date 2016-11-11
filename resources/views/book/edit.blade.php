@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Edit:
+    Edit {{ $book->title }}
 @stop
 
 @section('content')
 
-    <h1>Edit: </h1>
+    <h1>Edit {{ $book->title }} </h1>
 
     <form method='POST' action='/books/{{ $book->id }}'>
 
