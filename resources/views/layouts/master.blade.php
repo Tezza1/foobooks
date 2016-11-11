@@ -21,6 +21,12 @@
 
 </head>
 <body>
+    
+    @if(Session::get('flash_view') != null)
+        <div class='flash_message'>
+            @include('messages.'.Session::get('flash_view')[0], Session::get('flash_view')[1])
+        </div>
+    @endif
 
     @if(Session::get('flash_message') != null)
         <div class='flash_message'>{{ Session::get('flash_message') }}</div>

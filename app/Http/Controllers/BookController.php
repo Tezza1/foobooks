@@ -42,18 +42,7 @@ class BookController extends Controller
             'purchase_link' => 'required|url',
         ]);
 
-        # If there were errors, Laravel will redirect the
-        # user back to the page that submitted this request
-        # The validator will tack on the form data to the request
-        # so that it's possible (but not required) to pre-fill the
-        # form fields with the data the user had entered
-
-        # If there were NO errors, the script will continue...
-
-        # Get the data from the form
-        #$title = $_POST['title']; # Option 1) Old way, don't do this.
-        $title = $request->input('title'); # Option 2) USE THIS ONE! :)
-
+        # Add the new book to the database
         $book = new Book();
         $book->title = $request->input('title');
         $book->published = $request->input('published');
@@ -61,7 +50,7 @@ class BookController extends Controller
         $book->purchase_link = $request->input('purchase_link');
         $book->save();
 
-        Session::flash('flash_message', 'Your book '.$book->title.' was added.');
+        Session::flash('flash_message', 'The book '.$book->title.' was added.');
 
         return redirect('/books');
 
@@ -100,17 +89,18 @@ class BookController extends Controller
             'purchase_link' => 'required|url',
         ]);
 
+        # Find the book we want to update
         $book = Book::find($request->id);
 
+        # Update
         $book->title = $request->title;
         $book->cover = $request->cover;
         $book->published = $request->published;
         $book->purchase_link = $request->purchase_link;
-
         $book->save();
 
-        Session::flash('flash_message', 'Your changes to '.$book->title.' were saved.');
-
+        # Finish
+        Session::flash('flash_view', ['book_edits_saved', ['title' => $book->title]]);
         return redirect('/books');
     }
 
