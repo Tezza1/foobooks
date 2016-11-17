@@ -12,7 +12,7 @@ class BookController extends Controller
 {
 
     /**
-	*
+	* GET
 	*/
     public function index()
     {
@@ -21,7 +21,7 @@ class BookController extends Controller
     }
 
     /**
-	* Get
+	* GET
 	*/
     public function create()
     {
@@ -29,7 +29,7 @@ class BookController extends Controller
     }
 
     /**
-	* Post
+	* POST
 	*/
     public function store(Request $request)
     {
@@ -69,7 +69,7 @@ class BookController extends Controller
 
 
     /**
-	*
+	* GET
 	*/
     public function show($id)
     {
@@ -78,7 +78,7 @@ class BookController extends Controller
 
 
     /**
-	*
+	* GET
 	*/
     public function edit($id)
     {
@@ -86,8 +86,9 @@ class BookController extends Controller
         return view('book.edit')->with(['book' => $book]);
     }
 
+
     /**
-	*
+	* POST
 	*/
     public function update(Request $request, $id)
     {
@@ -100,17 +101,16 @@ class BookController extends Controller
             'purchase_link' => 'required|url',
         ]);
 
+        # Find and update book
         $book = Book::find($request->id);
-
         $book->title = $request->title;
         $book->cover = $request->cover;
         $book->published = $request->published;
         $book->purchase_link = $request->purchase_link;
-
         $book->save();
 
+        # Finish
         Session::flash('flash_message', 'Your changes to '.$book->title.' were saved.');
-
         return redirect('/books');
     }
 
@@ -124,6 +124,7 @@ class BookController extends Controller
 
 
     /**
+    * GET
 	* This was example code I wrote in Lecture 7
     * It shows, roughly, what a controller action for your P3 might look like
     * It is not at all related to the Book resource.

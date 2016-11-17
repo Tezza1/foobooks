@@ -17,8 +17,8 @@
     @else
         <div id='books' class='cf'>
             @foreach($books as $book)
-                <section class='book'>
 
+                <section class='book'>
                     <a href='/books/{{ $book->id }}'><h2 class='truncate'>{{ $book->title }}</h2></a>
 
                     <img class='cover' src='{{ $book->cover }}' alt='Cover for {{ $book->title }}'>
@@ -26,9 +26,9 @@
                     <br>
                     <a href='/books/{{ $book->id }}/edit'><i class='fa fa-pencil'></i> Edit</a><br>
                     <a href='/books/{{ $book->id }}'><i class='fa fa-eye'></i> View</a><br>
-
                 </section>
             @endforeach
         </div>
     @endif
+
 @endsection

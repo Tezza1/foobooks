@@ -15,18 +15,19 @@ use App\Book;
 class PracticeController extends Controller
 {
 
-
     /**
-	*
+	* Demonstrating querying on the Collection rather than the DB
 	*/
     public function example15() {
 
         /*
         2 separate queries on the database:
         */
-        // $books = Book::orderBy('id','descending')->get(); # Query DB
-        // $first_book = Book::orderBy('id','descending')->first(); # Query DB
-        // dump($books);
+        $books = Book::orderBy('id','descending')->get(); # Query DB
+        $first_book = Book::orderBy('id','descending')->first(); # Query DB
+        dump($books);
+        dump($first_book);
+
         /*
         1 query on the database, 1 query on the collection (better):
         */
@@ -37,8 +38,9 @@ class PracticeController extends Controller
 
     }
 
+
     /**
-	*
+	* Demonstrating magic methods of Collections
 	*/
     public function example14() {
 
