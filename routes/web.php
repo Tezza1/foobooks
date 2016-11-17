@@ -121,6 +121,10 @@ Route::get('/debug', function() {
 /**
 * Main homepage
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+# Old: Dedicated view for the homepage
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+# New as of Lecture 11, just use the "book index" as the homepage
+Route::get('/', 'BookController@index');
