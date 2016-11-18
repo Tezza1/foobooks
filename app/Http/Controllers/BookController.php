@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Book;
+use App\Tag;
+use App\Author;
 use Session;
 
 class BookController extends Controller
 {
 
     /**
-	* GET
-	*/
+    * GET
+    */
     public function index()
     {
         $books = Book::all();
@@ -21,16 +23,16 @@ class BookController extends Controller
     }
 
     /**
-	* GET
-	*/
+    * GET
+    */
     public function create()
     {
         return view('book.create');
     }
 
     /**
-	* POST
-	*/
+    * POST
+    */
     public function store(Request $request)
     {
 
@@ -69,8 +71,8 @@ class BookController extends Controller
 
 
     /**
-	* GET
-	*/
+    * GET
+    */
     public function show($id)
     {
         return view('book.show')->with('title', $id);
@@ -78,18 +80,47 @@ class BookController extends Controller
 
 
     /**
-	* GET
-	*/
+    * GET
+    */
     public function edit($id)
     {
         $book = Book::find($id);
-        return view('book.edit')->with(['book' => $book]);
+
+        # Author
+        $authors = Author::orderBy('last_name', 'ASC')->get();
+
+        $authors_for_dropdown = [];
+        foreach($authors as $author) {
+            $authors_for_dropdown[$author->id] = $author->last_name;
+        }
+
+        # Tags
+        $tags = Tag::orderBy('name','ASC')->get();
+        $tags_for_checkboxes = [];
+        foreach($tags as $tag) {
+            $tags_for_checkboxes[$tag->id] = $tag->name;
+        }
+
+        # Just the tags for this book
+        $tags_for_this_book = [];
+        foreach($book->tags as $tag) {
+            $tags_for_this_book[] = $tag->name;
+        }
+
+        return view('book.edit')->with(
+            [
+                'book' => $book,
+                'authors_for_dropdown' => $authors_for_dropdown,
+                'tags_for_checkboxes' => $tags_for_checkboxes,
+                'tags_for_this_book' => $tags_for_this_book,
+            ]
+        );
     }
 
 
     /**
-	* POST
-	*/
+    * POST
+    */
     public function update(Request $request, $id)
     {
 
@@ -106,7 +137,28 @@ class BookController extends Controller
         $book->title = $request->title;
         $book->cover = $request->cover;
         $book->published = $request->published;
+        $book->author_id = $request->author_id;
         $book->purchase_link = $request->purchase_link;
+        $book->save();
+
+        dd($request->tags);
+
+
+
+        # If there were tags selected...
+        if($request->tags) {
+            $tags = $request->tags;
+        }
+        # If there were no tags selected (i.e. no tags in the request)
+        # default to an empty array of tags
+        else {
+            $tags = [];
+        }
+
+        # Above if/else could be condensed down to this: $tags = ($request->tags) ?: [];
+
+        # Sync tags
+        $book->tags()->sync($tags);
         $book->save();
 
         # Finish
@@ -115,8 +167,8 @@ class BookController extends Controller
     }
 
     /**
-	*
-	*/
+    *
+    */
     public function destroy($id)
     {
         //
@@ -125,10 +177,10 @@ class BookController extends Controller
 
     /**
     * GET
-	* This was example code I wrote in Lecture 7
+    * This was example code I wrote in Lecture 7
     * It shows, roughly, what a controller action for your P3 might look like
     * It is not at all related to the Book resource.
-	*/
+    */
     public function getLoremIpsumText(Request $request)
     {
 
