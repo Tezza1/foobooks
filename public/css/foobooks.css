@@ -11,6 +11,15 @@ a:link {
     text-decoration:underline;
 }
 
+a.button:link {
+    text-decoration:none;
+    display:inline-block;
+    padding:4px;
+}
+
+a.button:hover {
+    color:black;
+}
 
 /* clearfix http://nicolasgallagher.com/micro-clearfix-hack/ */
 .cf:before,
@@ -91,6 +100,7 @@ label {
     margin-bottom:0;
     display:block;
     font-size:1em;
+    font-weight:bold;
 }
 
 fieldset label {
@@ -105,6 +115,11 @@ legend {
 
 .checkboxLabel, .radioLabel {
     display:inline;
+}
+
+.form-instructions {
+    margin:5px 0px;
+    color:grey;
 }
 
 input[type=text],input[type=password],select {

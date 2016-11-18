@@ -21,8 +21,11 @@ Route::get('/books/{id}/edit', 'BookController@edit')->name('books.edit');
 # Process form to edit a book
 Route::put('/books/{id}', 'BookController@update')->name('books.update');
 
-# Delete a book
-Route::delete('/books/{title}', 'BookController@destroy')->name('books.destroy');
+# Get route to confirm deletion of book
+Route::get('/books/{id}/delete', 'BookController@delete')->name('books.destroy');
+
+# Delete route to actually destroy the book
+Route::delete('/books/{id}', 'BookController@destroy')->name('books.destroy');
 
 # The above routes *could* all be replaced with this one line:
 # Route::resource('books', 'BookController');

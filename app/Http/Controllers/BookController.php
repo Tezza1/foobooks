@@ -27,7 +27,17 @@ class BookController extends Controller
     */
     public function create()
     {
-        return view('book.create');
+
+        # Author
+        $authors_for_dropdown = Author::getForDropdown();
+
+        # Author
+        $tags_for_checkboxes = Tag::getForCheckboxes();
+
+        return view('book.create')->with([
+            'authors_for_dropdown' => $authors_for_dropdown,
+            'tags_for_checkboxes' => $tags_for_checkboxes
+        ]);
     }
 
     /**
@@ -60,7 +70,13 @@ class BookController extends Controller
         $book->title = $request->input('title');
         $book->published = $request->input('published');
         $book->cover = $request->input('cover');
+        $book->author_id = $request->author_id;
         $book->purchase_link = $request->input('purchase_link');
+        $book->save();
+
+        # Save Tags
+        $tags = ($request->tags) ?: [];
+        $book->tags()->sync($tags);
         $book->save();
 
         Session::flash('flash_message', 'Your book '.$book->title.' was added.');
@@ -75,7 +91,16 @@ class BookController extends Controller
     */
     public function show($id)
     {
-        return view('book.show')->with('title', $id);
+        $book = Book::find($id);
+
+        if(is_null($book)) {
+            Session::flash('message','Book not found');
+            return redirect('/books');
+        }
+
+        return view('book.show')->with([
+            'book' => $book,
+        ]);
     }
 
 
@@ -86,20 +111,11 @@ class BookController extends Controller
     {
         $book = Book::find($id);
 
-        # Author
-        $authors = Author::orderBy('last_name', 'ASC')->get();
+        # Possible authors
+        $authors_for_dropdown = Author::getForDropdown();
 
-        $authors_for_dropdown = [];
-        foreach($authors as $author) {
-            $authors_for_dropdown[$author->id] = $author->last_name;
-        }
-
-        # Tags
-        $tags = Tag::orderBy('name','ASC')->get();
-        $tags_for_checkboxes = [];
-        foreach($tags as $tag) {
-            $tags_for_checkboxes[$tag->id] = $tag->name;
-        }
+        # Possible tags
+        $tags_for_checkboxes = Tag::getForCheckboxes();
 
         # Just the tags for this book
         $tags_for_this_book = [];
@@ -141,10 +157,6 @@ class BookController extends Controller
         $book->purchase_link = $request->purchase_link;
         $book->save();
 
-        dd($request->tags);
-
-
-
         # If there were tags selected...
         if($request->tags) {
             $tags = $request->tags;
@@ -166,12 +178,42 @@ class BookController extends Controller
         return redirect('/books');
     }
 
+
     /**
-    *
+	* GET
+    * Page to confirm deletion
+	*/
+    public function delete($id) {
+
+        $book = Book::find($id);
+
+        return view('book.delete')->with('book', $book);
+    }
+
+    /**
+    * POST
     */
     public function destroy($id)
     {
-        //
+        # Get the book to be deleted
+        $book = Book::find($id);
+
+        if(is_null($book)) {
+            Session::flash('message','Book not found.');
+            return redirect('/books');
+        }
+
+        # First remove any tags associated with this book
+        if($book->tags()) {
+            $book->tags()->detach();
+        }
+
+        # Then delete the book
+        $book->delete();
+
+        # Finish
+        Session::flash('flash_message', $book->title.' was deleted.');
+        return redirect('/books');
     }
 
 

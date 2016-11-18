@@ -1,35 +1,31 @@
 @extends('layouts.master')
 
-
 @section('title')
-    Success!
-@stop
+    {{ $book->title }}
+@endsection
 
-
-{{--
-This `head` section will be yielded right before the closing </head> tag.
-Use it to add specific things that *this* View needs in the head,
-such as a page specific stylesheets.
---}}
 @section('head')
-    <link href="/css/books/show.css" type='text/css' rel='stylesheet'>
-@stop
-
+    <link href='/css/book.css' rel='stylesheet'>
+@endsection
 
 @section('content')
-    @if($title)
-        <h1>Show book: {{ $title }}</h1>
-    @else
-        <h1>No book chosen</h1>
-    @endif
-@stop
 
+    <h1 class='truncate'>{{ $book->title }}</h1>
 
-{{--
-This `body` section will be yielded right before the closing </body> tag.
-Use it to add specific things that *this* View needs at the end of the body,
-such as a page specific JavaScript files.
---}}
-@section('body')
-    <script src="/js/books/show.js"></script>
-@stop
+    <h2 class='truncate'>{{ $book->author->first_name }} {{ $book->author->last_name }}</h2>
+
+    <img class='cover' src='{{ $book->cover }}' alt='Cover for {{$book->title}}'>
+
+    <div class='tags'>
+        @foreach($book->tags as $tag)
+            <div class='tag'>{{ $tag->name }}</div>
+        @endforeach
+    </div>
+
+    <a class='button' href='/books/{{ $book->id }}/edit'><i class='fa fa-pencil'></i> Edit</a>
+    <a class='button' href='/books/{{ $book->id }}/delete'><i class='fa fa-trash'></i> Delete</a>
+
+    <br><br>
+    <a class='return' href='/books'>&larr; Return to all books</a>
+
+@endsection
