@@ -62,26 +62,30 @@
         </div>
 
 
-        <select name='author_id'>
-            @foreach($authors_for_dropdown as $author_id => $author)
-                <option
-                {{ ($author_id == $book->author->id) ? 'SELECTED' : '' }}
-                value='{{ $author_id }}'
-                >{{ $author }}</option>
+        <div class='form-group'>
+            <label>Author</label>
+            <select name='author_id'>
+                @foreach($authors_for_dropdown as $author_id => $author)
+                    <option
+                    {{ ($author_id == $book->author->id) ? 'SELECTED' : '' }}
+                    value='{{ $author_id }}'
+                    >{{ $author }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class='form-group'>
+            <label>Tags</label>
+            @foreach($tags_for_checkboxes as $tag_id => $tag_name)
+                <input
+                type='checkbox'
+                value='{{ $tag_id }}'
+                name='tags[]'
+                {{ (in_array($tag_name, $tags_for_this_book)) ? 'CHECKED' : '' }}
+                >
+                {{ $tag_name }} <br>
             @endforeach
-        </select>
-
-        <br>
-
-        @foreach($tags_for_checkboxes as $tag_id => $tag_name)
-            <input
-            type='checkbox'
-            value='{{ $tag_id }}'
-            name='tags[]'
-            {{ (in_array($tag_name, $tags_for_this_book)) ? 'CHECKED' : '' }}
-            >
-            {{ $tag_name }} <br>
-        @endforeach
+        </div>
 
 
         <div class='form-instructions'>
