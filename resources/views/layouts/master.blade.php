@@ -28,17 +28,24 @@
 
     <header>
         <a href='/'>
-        <img
-        src='http://making-the-internet.s3.amazonaws.com/laravel-foobooks-logo@2x.png'
-        alt='Foobooks Logo'
-        class='logo'>
+            <img
+            src='http://making-the-internet.s3.amazonaws.com/laravel-foobooks-logo@2x.png'
+            alt='Foobooks Logo'
+            class='logo'>
         </a>
     </header>
 
     <nav>
         <ul>
-            <li><a href='/books'>View all books</a></li>
-            <li><a href='/books/create'>Add a new book</a></li>
+            @if(Auth::check())
+                <li><a href='/'>Home</a></li>
+                <li><a href='/books/create'>Add a book</a></li>
+                <li><a href='/logout'>Log out</a></li>
+            @else
+                <li><a href='/'>Home</a></li>
+                <li><a href='/login'>Log in</a></li>
+                <li><a href='/register'>Register</a></li>
+            @endif
         </ul>
     </nav>
 

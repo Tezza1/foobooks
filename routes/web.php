@@ -1,13 +1,27 @@
 <?php
 
+Route::get('/show-login-status', function() {
+
+    # You may access the authenticated user via the Auth facade
+    $user = Auth::user();
+
+    if($user)
+        dump($user->toArray());
+    else
+        dump('You are not logged in.');
+
+    return;
+});
+
+
 /**
 * Book resource
 */
 # Index page to show all the books
-Route::get('/books', 'BookController@index')->name('books.index');
+Route::get('/books', 'BookController@index')->name('books.index')->middleware('auth');
 
 # Show a form to create a new book
-Route::get('/books/create', 'BookController@create')->name('books.create');
+Route::get('/books/create', 'BookController@create')->name('books.create')->middleware('auth');
 
 # Process the form to create a new book
 Route::post('/books', 'BookController@store')->name('books.store');
@@ -53,7 +67,7 @@ Route::get('/contact', 'ContactController')->name('contact');
 */
 Route::get('/practice', 'PracticeController@index')->name('practice.index');
 for($i = 0; $i < 100; $i++) {
-    Route::get('/practice/'.$i, 'PracticeController@example'.$i)->name('practice.example'.$i);
+    #Route::get('/practice/'.$i, 'PracticeController@example'.$i)->name('practice.example'.$i);
 }
 
 
@@ -62,7 +76,7 @@ for($i = 0; $i < 100; $i++) {
 */
 # Make it so the logs can only be seen locally
 if(App::environment() == 'local') {
-    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    #Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 }
 
 
@@ -130,4 +144,9 @@ Route::get('/debug', function() {
 // });
 
 # New as of Lecture 11, just use the "book index" as the homepage
-Route::get('/', 'BookController@index');
+Route::get('/', 'PageController@welcome');
+
+Auth::routes();
+Route::get('/logout','Auth\LoginController@logout')->name('logout');
+
+#Route::get('/home', 'HomeController@index');

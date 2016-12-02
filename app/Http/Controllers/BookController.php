@@ -14,13 +14,31 @@ class BookController extends Controller
 {
 
     /**
-    * GET
-    */
-    public function index()
-    {
-        $books = Book::all();
-        return view('book.index')->with(['books' => $books]);
+* GET
+*/
+public function index(Request $request)
+{
+
+    $user = $request->user();
+
+    # Note: We're getting the user from the request, but you can also get it like this:
+    //$user = Auth::user();
+
+    if($user) {
+        # Approach 1)
+        $books = Book::where('user_id', '=', $user->id)->orderBy('id','DESC')->get();
+
+        # Approach 2) Take advantage of Model relationships
+        #$books = $user->books()->get();
     }
+    else {
+        $books = [];
+    }
+
+    return view('book.index')->with([
+        'books' => $books
+    ]);
+}
 
     /**
     * GET
@@ -72,6 +90,7 @@ class BookController extends Controller
         $book->cover = $request->input('cover');
         $book->author_id = $request->author_id;
         $book->purchase_link = $request->input('purchase_link');
+        $book->user_id = $request->user()->id;
         $book->save();
 
         # Save Tags
