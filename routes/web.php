@@ -67,7 +67,7 @@ Route::get('/contact', 'ContactController')->name('contact');
 */
 Route::get('/practice', 'PracticeController@index')->name('practice.index');
 for($i = 0; $i < 100; $i++) {
-    #Route::get('/practice/'.$i, 'PracticeController@example'.$i)->name('practice.example'.$i);
+    Route::get('/practice/'.$i, 'PracticeController@example'.$i)->name('practice.example'.$i);
 }
 
 

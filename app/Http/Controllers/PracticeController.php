@@ -19,6 +19,17 @@ class PracticeController extends Controller
     /**
     *
     */
+    public function example21() {
+
+        $book = Book::first();
+
+        return view('practice.example21')->with(['book' => $book]);
+    }
+
+
+    /**
+    *
+    */
     public function example20() {
         $books = Book::with('tags')->get();
 
